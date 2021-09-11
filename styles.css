@@ -9,6 +9,19 @@ h1 {
 	padding-left: 5rem;
 }
 
+input[type=text] {
+	resize: horizontal;
+	width: 50px;
+}
+
+input[type=text]:active {
+	width: auto;   
+}
+
+input[type=text]:focus {
+	min-width: 50px;
+}
+
 input[type=button], input[type=submit] {
 	background-color: #9c27b0;
 	border: none;
@@ -24,7 +37,7 @@ input[type=button]:disabled, input[type=submit]:disabled {
 }
 
 input[type=button]:hover, input[type=submit]:hover {
-background: #a261ad;
+	background: #a261ad;
 }
 
 input[type="file"] {
@@ -76,6 +89,20 @@ input[type="file"] {
 	border-radius: 25px;
 }
 
+.popup-item {
+	margin-top: .5rem;
+}
+
+#settings-popup {
+	background-color: black;
+	color: white;
+	padding: 1rem;
+	border-radius: 25px;
+	visibility: hidden;
+	position: absolute;
+	border: 5px solid white;
+}
+
 #span-label {
 	color: rgb(153,153,153);
 }
@@ -109,6 +136,6 @@ input[type="file"] {
 	image-rendering: crisp-edges;
 	margin-bottom: 2rem;
 	margin-top: 2rem;
-	background-color: black;
+	background-color: white;
 }
 

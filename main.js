@@ -4,6 +4,7 @@ function onLoad() {
 	document.getElementById('save').disabled = true;
 	document.getElementById('save-label').innerHTML = "";
 	document.getElementById('upload').value = "";
+	document.getElementById('settings-popup').style.visibility = 'hidden';
 }
 
 function openFile(file) {
@@ -29,9 +30,13 @@ function openFile(file) {
 	console.log("input " + fileName);
 	reader.readAsDataURL(input.files[0]);
 	output.onload = function(){
-		preview.width = output.width;
-		preview.height = output.height;
-		ctx.drawImage(output, 0, 0);
+		canvasPosX = 0;
+		canvasPosY = 0;
+		canvasWidth = output.width;
+		canvasHeight = output.height;
+		preview.width = canvasWidth;
+		preview.height = canvasHeight;
+		ctx.drawImage(output, canvasPosX, canvasPosY);
 		document.getElementById('convert').disabled = false;
 		document.getElementById('save').disabled = true;
 		document.getElementById('save-label').innerHTML = "Ready to convert";
@@ -40,11 +45,11 @@ function openFile(file) {
 
 function convertToObj() {
 	var canvas = document.getElementById('canvas');
-	canvas.width = output.width;
-	canvas.height = output.height;
+	canvas.width = canvasWidth;
+	canvas.height = canvasHeight;
 	var context = canvas.getContext('2d');
 	context.transform(1, 0, 0, -1, 0, canvas.height)
-	context.drawImage(output, 0, 0 );
+	context.drawImage(output, canvasPosX, canvasPosY);
 	document.getElementById('convert').disabled = true;
 	document.getElementById('save').disabled = false;
 	document.getElementById('save-label').innerHTML = "Conversion Successful";
@@ -66,10 +71,10 @@ function convertToObj() {
 function saveModel() {
 	let matBlob = saveMtl();
 	let objBlob = saveObj();
-	downloadTestZip(matBlob, objBlob);
+	downloadObjZip(matBlob, objBlob);
 }
 
-async function downloadTestZip(mtlContent, objContent) {
+async function downloadObjZip(mtlContent, objContent) {
 	// define what we want in the ZIP
 	const obj = { name: fileName + '.obj', lastModified: new Date(), input: objContent };
 	const mtl = { name: fileName + '.mtl', lastModified: new Date(), input: mtlContent };
@@ -176,10 +181,44 @@ function findOrCreateMtl(rgba, posOffset)
 	}
 }
 
+function toggleSettings() {
+	var settings = document.getElementById('settings-popup');
+	settings.style.visibility = settings.style.visibility == 'hidden' ? 'visible' : 'hidden';
+}
+
+function updateRect() {
+	canvasPosX = parseInt(document.getElementById('x-setter').value);
+	canvasPosY = parseInt(document.getElementById('y-setter').value);
+	canvasWidth = parseInt(document.getElementById('width').value);
+	canvasHeight = parseInt(document.getElementById('height').value);
+	var preview = document.getElementById('imagepreview');
+	var canvas = document.getElementById('canvas');
+	var context = canvas.getContext('2d');
+	var ctx = preview.getContext('2d');
+	context.clearRect(0, 0, canvas.width, canvas.height);
+	ctx.clearRect(0, 0, preview.width, preview.height);
+	preview.height = canvasHeight;
+	preview.width = canvasWidth;
+	canvas.height = canvasHeight;
+	canvas.width = canvasWidth;
+	ctx.drawImage(output, canvasPosX, canvasPosY);
+	context.drawImage(output, canvasPosX, canvasPosY)
+}
+
+function updateBackground(colorPicker) {
+	var canvas = document.getElementById('imagepreview');
+	var color = colorPicker.target.value;
+	canvas.style.backgroundColor = color;
+}
+
 let objVertices = [];
 let objMtl = [];
 let objFaces = [];
 let mtlNames = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 let output = null;
 let fileName = "";
+let canvasPosX = 0;
+let canvasPosY = 0;
+let canvasWidth = 0;
+let canvasHeight = 0;
           

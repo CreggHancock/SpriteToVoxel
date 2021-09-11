@@ -1,14 +1,9 @@
 <html>
 <head>
-    <script type="text/javascript" src="http://lib.ivank.net/ivank.js"></script>
-	<script type="text/javascript" src="http://k3d.ivank.net/K3D.js"></script>
 	<script type ="text/javascript" src="node_modules/client-zip/index.js"></script>
 	<script type="text/javascript" src="node_modules/client-zip/worker.js"></script>
 	<script type="text/javascript" src="main.js"></script>
-	<script type="text/javascript" src="objParser.js"></script>
 	<script type="text/javascript"></script>
-	<script src="https://webglfundamentals.org/webgl/resources/webgl-utils.js"></script>
-	<script src="https://webglfundamentals.org/webgl/resources/m4.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="styles.css">
 </head>
@@ -26,9 +21,24 @@
 		</div>
 		<img id='output'>
 		<canvas id='imagepreview' ></canvas><br>
+		<input id='settings' value='settings' type="button" onclick='toggleSettings()'>
 		<input disabled type='button' value='convert' id='convert' type="button" onclick='convertToObj()'>
 		<input disabled type='button' value='save' id='save' type="button" onclick='saveModel()'><br>
 		<span id="save-label">Ready to save!</span>
+		<div disabled id="settings-popup">
+			<p>Settings</p>
+			<span style="margin-bottom: 1rem;">background</span>
+			<input class='popup-item' id='backcolor-setter' type='color' value='background' oninput='updateBackground(event)' onchange='updateBackground(event)'><br>
+			<!--<span>x</span>
+			<input class='popup-item' id='x-setter' type='text' placeholder='0' onchange='updateRect()'>
+			<span>y</span>
+			<input class='popup-item' id='y-setter' type='text' placeholder='0' onchange='updateRect()'>
+			<span>width</span>
+			<input class='popup-item' id='width' type='text' placeholder='0' onchange='updateRect()'>
+			<span>height</span>
+			<input class='popup-item' id='height' type='text' placeholder='0' onchange='updateRect()'><br>-->
+		</div>
 	</div>
+	
 </body>
 </html>
