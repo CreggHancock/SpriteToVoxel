@@ -1,6 +1,6 @@
 body {
 	margin: 0;
-	background-color: teal;
+	background-color: darkslateblue;
 	font-family: "ＭＳ Ｐゴシック";
 }
 
@@ -48,7 +48,7 @@ input[type="file"] {
   
 .new-button {
 	display: inline-block;
-	padding: 8px 12px; 
+	padding: 8px 12px;
 	cursor: pointer;
 	border-radius: 4px;
 	background-color: #9c27b0;
@@ -109,5 +109,6 @@ input[type="file"] {
 	image-rendering: crisp-edges;
 	margin-bottom: 2rem;
 	margin-top: 2rem;
+	background-color: black;
 }
 
