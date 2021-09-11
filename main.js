@@ -22,7 +22,7 @@ function openFile(file) {
 		objNormals = [];
 		objVertices = [];
 		objFaces = [];
-		matMaps = [];
+		objMtl = [];
 	};
 	let nameArr = input.files[0].name.split(".");
 	fileName = nameArr[0];
@@ -112,8 +112,7 @@ function createCubeAtPosition(x, y, rgba) {
 	objVertices.push([x + 1, y, 0]);
 	objVertices.push([x + 1, y + 1, 0]);
 	
-	var mtlIndex = findOrCreateMtl(rgba, posOffset);
-	matMaps.push(mtlIndex);
+	findOrCreateMtl(rgba, objFaces.length);
 	objFaces.push([(1+posOffset), (2+posOffset), (3+posOffset), (4+posOffset)]);
 	objFaces.push([(8+posOffset), (7+posOffset), (6+posOffset), (5+posOffset)]);
 	objFaces.push([(4+posOffset), (3+posOffset), (7+posOffset), (8+posOffset)]);
@@ -124,19 +123,23 @@ function createCubeAtPosition(x, y, rgba) {
 }
 
 function getObjString() {
-	console.log(`vert length is ${objVertices.length}, face length is ${objFaces.length}`);
 	var objString = "# cube.obj\r\n#\r\n\r\nmtllib " + fileName + ".mtl\r\n\r\ng cube\r\n\r\n";
 	for (let v=0;v<objVertices.length;v++) {
 		let vert = objVertices[v];
 		objString += `v ${vert[0]} ${vert[1]} ${vert[2]}\r\n`;
 	}
-	for (let f=0;f<objFaces.length;f++) {
-		if (f % 6 === 0) {
-			let mappedIndex = matMaps[f / 6];
-			objString += `g ${objMtl[mappedIndex][1]}\r\nusemtl ${objMtl[mappedIndex][1]}\r\n`;
+	for (let m=0;m<objMtl.length;m++)
+	{
+		objString += `g ${objMtl[m][1]}\r\nusemtl ${objMtl[m][1]}\r\n`;
+		for (let p=0;p<objMtl[m][2].length;p++)
+		{
+			var offset = objMtl[m][2][p];
+			for (let side=0;side<6;side++)
+			{
+				let face = objFaces[offset+side];
+				objString += `f ${face[0]} ${face[1]} ${face[2]} ${face[3]}\r\n`;
+			}
 		}
-		let face = objFaces[f];
-		objString += `f ${face[0]} ${face[1]} ${face[2]} ${face[3]}\r\n`;
 	}
 	return objString;
 }
@@ -155,28 +158,26 @@ function getMtlString() {
 function findOrCreateMtl(rgba, posOffset)
 {
 	var mtlName = null;
-	var mtlIndex = 0;
 	for (var i=0;i<objMtl.length;i++) {
 		if (objMtl[i][0][0] == rgba[0] && objMtl[i][0][1] == rgba[1] && objMtl[i][0][2] == rgba[2]) {
+			objMtl[i][2].push(posOffset);
 			return i;
 		}
 	}
 	if (mtlName == null) {
-		mtlIndex = objMtl.length;
 		mtlName = "mat";
 		var nIndex = objMtl.length;
 		var firstIndex = Math.floor(nIndex / mtlNames.length);
 		var secondIndex = nIndex % mtlNames.length;
+		var offsetArr = [posOffset];
 		mtlName += mtlNames[firstIndex];
 		mtlName += mtlNames[secondIndex];
-		objMtl.push([rgba, mtlName]);
+		objMtl.push([rgba, mtlName, offsetArr]);
 	}
-	return mtlIndex;
 }
 
 let objVertices = [];
 let objMtl = [];
-let matMaps = [];
 let objFaces = [];
 let mtlNames = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 let output = null;
