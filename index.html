@@ -1,0 +1,34 @@
+<html>
+<head>
+    <script type="text/javascript" src="http://lib.ivank.net/ivank.js"></script>
+	<script type="text/javascript" src="http://k3d.ivank.net/K3D.js"></script>
+	<script type ="text/javascript" src="node_modules/client-zip/index.js"></script>
+	<script type="text/javascript" src="node_modules/client-zip/worker.js"></script>
+	<script type="text/javascript" src="main.js"></script>
+	<script type="text/javascript" src="objParser.js"></script>
+	<script type="text/javascript"></script>
+	<script src="https://webglfundamentals.org/webgl/resources/webgl-utils.js"></script>
+	<script src="https://webglfundamentals.org/webgl/resources/m4.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body onload='onLoad()'>
+	<div class="heading">
+		<h1>SpriteToVoxel</h1>
+	</div>
+	<canvas id="canvas"></canvas><br>
+	<div class="view">
+		<div class="container">
+			<div class="button-wrap">
+			  	<label class ="new-button" for="upload"> Upload Sprite
+				<input id="upload" type='file' accept='image/*' onchange='openFile(event)'>
+			</div>
+		</div>
+		<img id='output'>
+		<canvas id='imagepreview' ></canvas><br>
+		<input disabled type='button' value='convert' id='convert' type="button" onclick='convertToObj()'>
+		<input disabled type='button' value='save' id='save' type="button" onclick='saveModel()'><br>
+		<span id="save-label">Ready to save!</span>
+	</div>
+</body>
+</html>

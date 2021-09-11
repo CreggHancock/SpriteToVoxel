@@ -1,0 +1,113 @@
+body {
+	margin: 0;
+	background-color: teal;
+	font-family: "ＭＳ Ｐゴシック";
+}
+
+h1 {
+	color: white;
+	padding-left: 5rem;
+}
+
+input[type=button], input[type=submit] {
+	background-color: #9c27b0;
+	border: none;
+	color: white;
+	padding: 10px 16px;
+	text-decoration: none;
+	margin: 4px 10px;
+	border-radius: 4px;
+	cursor: pointer;
+}
+input[type=button]:disabled, input[type=submit]:disabled {
+	background: #000000;
+}
+
+input[type=button]:hover, input[type=submit]:hover {
+background: #a261ad;
+}
+
+input[type="file"] {
+	position: absolute;
+	z-index: -1;
+	top: 6px;
+	left: 20px;
+	padding-left: 1.5rem;
+	font-size: 15px;
+	color: rgb(153,153,153);
+}
+
+.container {
+	display: flex;
+	height: 2rem;
+  }
+
+.button-wrap {
+	position: relative;
+}
+  
+.new-button {
+	display: inline-block;
+	padding: 8px 12px; 
+	cursor: pointer;
+	border-radius: 4px;
+	background-color: #9c27b0;
+	font-size: 16px;
+	color: #fff;
+}
+
+.new-button:hover {
+	background-color: #a261ad;
+}
+
+
+.heading {
+	background-color: black;
+	overflow: hidden;
+}
+
+.view {
+	position: absolute;
+	left: 50%;
+	background-color: whitesmoke;
+	padding: 5rem;
+	transform: translate(-50%, 0%);
+	border: 5px solid black;
+	border-radius: 25px;
+}
+
+#span-label {
+	color: rgb(153,153,153);
+}
+
+
+#canvas {
+	visibility: hidden;
+	display: none;
+}
+
+#output {
+	max-width: 100%;
+	height: auto;
+	visibility: hidden;
+}
+
+#save-label {
+	text-align: center;
+	padding: 6px;
+	font-size: large;
+	font-weight: bolder;
+	color: #9c27b0;
+}
+
+#imagepreview {
+	width: 256px;
+	height: auto;
+	image-rendering: -moz-crisp-edges;
+	image-rendering: -webkit-crisp-edges;
+	image-rendering: pixelated;
+	image-rendering: crisp-edges;
+	margin-bottom: 2rem;
+	margin-top: 2rem;
+}
+
